@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة الألعاب العالمية الاحترافية</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: radial-gradient(circle at top, #1a1a2e 0%, #0f0f1a 100%); 
+            color: #fff; 
+            margin: 0; 
+            padding: 20px; 
+            text-align: center;
+            min-height: 100vh;
+        }
+        h1 { 
+            font-size: 36px;
+            color: #00ffcc; 
+            text-shadow: 0 0 20px rgba(0,255,204,0.6); 
+            margin-top: 30px;
+            margin-bottom: 5px; 
+            font-weight: 900;
+        }
+        p { color: #8a8ab3; font-size: 16px; margin-bottom: 35px; }
+        
+        /* شريط البحث المضيء المطور */
+        .search-container { margin-bottom: 40px; }
+        .search-box { 
+            width: 90%; 
+            max-width: 600px; 
+            padding: 15px 30px; 
+            border-radius: 50px; 
+            border: 2px solid #00ffcc; 
+            background: rgba(20, 20, 35, 0.8); 
+            color: #fff; 
+            font-size: 18px; 
+            outline: none; 
+            transition: 0.4s ease; 
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0,255,204,0.2);
+        }
+        .search-box:focus { 
+            box-shadow: 0 0 30px rgba(0,255,204,0.6); 
+            background: #141423;
+        }
+
+        /* شبكة عرض كروت الألعاب الاحترافية الجيمينج */
+        .games-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
+            gap: 25px; 
+            max-width: 1300px; 
+            margin: 0 auto; 
+            padding: 10px;
+        }
+        .game-card { 
+            background: linear-gradient(145deg, #1e1e38, #141424); 
+            border: 1px solid rgba(0,255,204,0.1); 
+            padding: 12px; 
+            border-radius: 20px; 
+            cursor: pointer; 
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        .game-card:hover { 
+            border-color: #00ffcc; 
+            transform: translateY(-8px) scale(1.02); 
+            box-shadow: 0 12px 25px rgba(0,255,204,0.3); 
+        }
+        .game-thumb { 
+            width: 100%; 
+            height: 125px; 
+            object-fit: cover; 
+            border-radius: 15px; 
+            background: #222; 
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+        .game-title { 
+            font-size: 15px; 
+            font-weight: bold; 
+            margin-top: 12px; 
+            text-transform: capitalize; 
+            color: #e2e2ff; 
+            letter-spacing: 0.5px;
+        }
+        
+        /* واجهة اللعب السينمائية الفاخرة */
+        #game-screen { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 9999; }
+        .control-bar { display: flex; justify-content: space-between; align-items: center; background: #141424; padding: 10px 25px; border-bottom: 2px solid #00ffcc; height: 65px; box-sizing: border-box; }
+        .btn { padding: 12px 25px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px; transition: 0.2s; }
+        .back-btn { background: #ff3366; color: #fff; box-shadow: 0 0 10px rgba(255,51,102,0.3); }
+        .back-btn:hover { background: #e02253; box-shadow: 0 0 15px rgba(255,51,102,0.5); }
+        .full-btn { background: #00ffcc; color: #000; box-shadow: 0 0 10px rgba(0,255,204,0.3); }
+        .full-btn:hover { background: #00ccaa; box-shadow: 0 0 15px rgba(0,255,204,0.5); }
+        .iframe-container { width: 100%; height: calc(100vh - 65px); background: #000; }
+        iframe { width: 100%; height: 100%; border: none; }
+    </style>
+</head>
+<body>
+
+    <h1>منصة الألعاب العالمية</h1>
+    <p>بوابتك الخاصة لأقوى ألعاب الويب الـ 300 - شاشة كاملة وبدون إعلانات</p>
+
+    <!-- شريط البحث المطور -->
+    <div class="search-container">
+        <input type="text" id="search-input" class="search-box" placeholder="🎮 ابحث عن لعبتك المفضلة الآن..." onkeyup="filterGames()">
+    </div>
+
+    <!-- شبكة توليد الكروت الملونة تلقائياً -->
+    <div class="games-grid" id="main-grid"></div>
+
+    <!-- واجهة تشغيل اللعبة الاحترافية -->
+    <div id="game-screen">
+        <div class="control-bar">
+            <button class="btn back-btn" onclick="closeGame()">◄ خروج ورجوع</button>
+            <h2 id="current-title" style="margin: 0; font-size: 20px; color: #00ffcc; text-shadow: 0 0 10px rgba(0,255,204,0.4);">اسم اللعبة</h2>
+            <button class="btn full-btn" onclick="goFull()">ملء الشاشة ⛶</button>
+        </div>
+        <div class="iframe-container" id="player-box">
+            <iframe id="game-container" src="" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script>
+        // مصفوفة مجلدات الألعاب الكاملة
+        const gameFolders = [
+            "1.5", "1.8", "1.12", "1-on-1-soccer", "1-on-1-tennis", "1v1.lol", "3D-flight-simulator", "8-ball-classic", "10-minutes-till-dawn", "12-mini-battles", "2048", "2048-cupcakes", "agar-io-lite", "age-of-war", "age-of-war-2", "ages-of-conflict", "Alpha_1.2.6", "among-us", "angry-birds", "angry-birds-showdown", "angry-birds-space", "awesome-tanks", "awesome-tanks-2", "backrooms", "bacon-may-die", "bad-ice-cream", "bad-ice-cream-2", "bad-ice-cream-3", "bad-parenting",
+            "bad-piggies", "baldis-basics", "baseball-9ross", "basketball-legends", "basketball-stars", "basket-bros", "basket-random", "Beta_1.3", "bitlife", "blf-planes", "blocky-snakes", "bloons-TD", "bloons-TD-2", "bloons-TD-3", "bloons-TD-4", "bloons-TD-5", "blazer2", "blumgi-racers", "blumgi-rocket", "bob-the-robber", "bob-the-robber-2", "bob-the-robber-5", "bouncy-motors", "bowmasters", "boxing-random", "breaking-the-bank", "bubble-shooter", "candy-crush", "capybara-clicker",
+            "car-drawing", "car-king-arena", "chess", "choppy-orc", "circloo", "circloo-2", "clash-of-vikings", "cleanup-io", "cluster-rush", "cookie-clicker", "crazy-cars", "crazy-catttle-3D", "crazy-crash-landing", "crazy-motorcycle", "crossy-road", "cut-the-rope", "dadish", "dadish-2", "dadish-3", "death-chase", "death-run-3D", "demolition-derby-crash-racing", "doodle-jump", "draw-climber", "dreadhead-parkour", "drift-boss", "drive-mad", "duck-life", "duck-life-2",
+            "duck-life-3", "duck-life-4", "duck-life-5", "ducklings-io", "eagle-ride", "earn-to-die", "earn-to-die-2", "eggy-car", "elastic-face", "escape-road", "escape-road-2", "escaping-the-prison", "evil-glitch", "fancy-pants-adventure", "fancy-pants-adventure-2", "fireboy-and-watergirl", "fireboy-and-watergirl-2", "fireboy-and-watergirl-3", "fireboy-and-watergirl-4", "flappy-bird", "flood-runner-2", "flood-runner-3", "flood-runner-4", "fnaf", "fnaf-2", "fnaf-3", "fnaf-4", "football-bros", "football-legends",
+            "free-rider-3", "fruit-ninja", "funny-battle", "funny-battle-2", "funny-mad-racing", "funny-shooter-2", "geometry-dash", "geometry-dash-lite", "geometry-vibes", "getaway-shootout", "get-on-top", "gladi-hoppers", "google-baseball", "google-dino", "granny", "granny-2", "guess-their-answer", "hanger-2", "happy-wheels", "helix-jump", "highway-traffic", "hill-climb-racing-lite", "hole-io", "house-of-hazards", "hover-racer-drive", "idle-breakout", "Indev", "iron-snout", "jetpack-joyride",
+            "johnny-trigger", "jumping-shell", "karate-bros", "kart-bros", "learn-to-fly", "learn-to-fly-2", "learn-to-fly-3", "learn-to-fly-idle", "level-devil", "madalin-stunt-cars-2", "melon-playground", "merge-round-racers", "minesweeper", "monkey-mart", "monster-tracks", "moto-x3m", "moto-x3m-2", "moto-x3m-3", "moto-x3m-pool-party", "moto-x3m-spooky-land", "moto-x3m-winter", "naob-miner", "opposite-day", "ovo", "ovo-2", "ovo-3-dimensions", "pac-man", "papas-bakeria", "papas-burgeria",
+            "papas-cheeseria", "papas-cupcakeria", "papas-donuteria", "papas-freezeria", "papas-hotdoggeria", "papas-pancakeria", "papas-pastaria", "papas-pizzeria", "papas-scooperia", "papas-sushiria", "papas-taco-mia", "papas-wingeria", "paper-io-2", "parking-fury", "parking-fury-2", "parking-fury-3", "picos-school", "ping-pong-chaos", "pixel-speedrun", "plants-vs-zombies", "plonky", "polytrack", "poor-bunny", "pou", "ragdoll-archers", "ragdoll-hit", "ragdoll-soccer", "red-ball-4-vol-1", "red-ball-4-vol-2",
+            "red-ball-4-vol-3", "retro-bowl", "retro-bowl-college", "retro-highway", "retro-ping-pong", "riddle-school", "riddle-school-2", "riddle-school-3", "riddle-school-4", "riddle-school-5", "riddle-transfer", "riddle-transfer-2", "rocket-soccer-derby", "rooftop-snipers", "rooftop-snipers-2", "run", "run-2", "run-3", "sand-game", "short-life", "slope", "slope-2-player", "slope-3", "slow-roads", "sm-63", "sm-64", "snowball-io", "snow-rider", "snow-load",
+            "soccer-bros", "soccer-random", "spacebar-clicker", "space-is-key", "space-is-key-2", "space-waves", "speed-stars", "sprunki", "stack", "stacktris", "state-io", "stick-archers-battle", "stick-fighter", "stickman-hook", "stick-merge", "subway-surfers-beijing", "subway-surfers-havana", "subway-surfers-san-francisco", "super-bike-the-champion", "superhot", "super-liquid-soccer", "super-star-car", "table-tennis-world-tour", "tag", "tap-road", "temple-of-boom", "temple-run-2", "territorial-io", "the-impossible-quiz"
+        ];
+
+        const gridElement = document.getElementById('main-grid');
+
+        // توليد الكروت الملونة بتصميم متطور مع صور خلفية ذكية مبنية على أسماء الألعاب
+        gameFolders.forEach(folder => {
+            const card = document.createElement('div');
+            card.className = 'game-card';
+            card.setAttribute('data-name', folder.replace(/-/g, ' '));
