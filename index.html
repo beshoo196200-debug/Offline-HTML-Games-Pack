@@ -4,6 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matrix Games | عالم ماتريكس للألعاب</title>
+    
+    <!-- استدعاء ملفات تشغيل سيرفر جوجل السحابي لربط قاعدة البيانات فوراً -->
+    <script type="module">
+        import { initializeApp } from "https://gstatic.com";
+        import { getFirestore, doc, setDoc, getDoc, arrayUnion } from "https://gstatic.com";
+
+        // المفتاح السحابي الكبير الخاص بحساب بشوي المظبوط
+        const firebaseConfig = {
+            apiKey: "AIzaSyDJZBVpfuTCeTKk4ml4SRvo7BrQnMh4QEE",
+            authDomain: "://firebaseapp.com",
+            projectId: "matrix-database-b13f3",
+            storageBucket: "matrix-database-b13f3.firebasestorage.app",
+            messagingSenderId: "98576605408",
+            appId: "1:98576605408:web:80fafe3a94d0406a6b7085",
+            measurementId: "G-DSEEFT7QJB"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.db = db;
+        window.setDoc = setDoc;
+        window.getDoc = getDoc;
+        window.doc = doc;
+        window.arrayUnion = arrayUnion;
+    </script>
+
     <style>
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
@@ -124,56 +151,7 @@
     </div>
 
     <script>
-        // التعديل السحري: قراءة المجلدات مباشرة برة بدون كلمة offline الملعونة
-                // مصفوفة الـ 300 لعبة الكاملة المفرغة المكتوبة كود برمجياً بالتمام والكمال
+        // المصفوفة الكاملة الـ 300 لعبة المظبوطة على مسار مستودعك الرئيسي
         let gameFiles = [
             "level-devil", "1v1.lol", "moto-x3m", "1.5", "1.8", "1.12", "1-on-1-soccer", "1-on-1-tennis", "3D-flight-simulator", "8-ball-classic", "10-minutes-till-dawn", "12-mini-battles", "2048", "2048-cupcakes", "agar-io-lite", "age-of-war", "age-of-war-2", "ages-of-conflict", "Alpha_1.2.6", "among-us", "angry-birds", "angry-birds-showdown", "angry-birds-space", "awesome-tanks", "awesome-tanks-2", "backrooms", "bacon-may-die", "bad-ice-cream", "bad-ice-cream-2", "bad-ice-cream-3", "bad-parenting",
             "bad-piggies", "baldis-basics", "baseball-9ross", "basketball-legends", "basketball-stars", "basket-bros", "basket-random", "Beta_1.3", "bitlife", "blf-planes", "blocky-snakes", "bloons-TD", "bloons-TD-2", "bloons-TD-3", "bloons-TD-4", "bloons-TD-5", "blazer2", "blumgi-racers", "blumgi-rocket", "bob-the-robber", "bob-the-robber-2", "bob-the-robber-5", "bouncy-motors", "bowmasters", "boxing-random", "breaking-the-bank", "bubble-shooter", "candy-crush", "capybara-clicker",
-            "car-drawing", "car-king-arena", "chess", "choppy-orc", "circloo", "circloo-2", "clash-of-vikings", "cleanup-io", "cluster-rush", "cookie-clicker", "crazy-cars", "crazy-catttle-3D", "crazy-crash-landing", "crazy-motorcycle", "crossy-road", "cut-the-rope", "dadish", "dadish-2", "dadish-3", "death-chase", "death-run-3D", "demolition-derby-crash-racing", "doodle-jump", "draw-climber", "dreadhead-parkour", "drift-boss", "drive-mad", "duck-life", "duck-life-2",
-            "duck-life-3", "duck-life-4", "duck-life-5", "ducklings-io", "eagle-ride", "earn-to-die", "earn-to-die-2", "eggy-car", "elastic-face", "escape-road", "escape-road-2", "escaping-the-prison", "evil-glitch", "fancy-pants-adventure", "fancy-pants-adventure-2", "fireboy-and-watergirl", "fireboy-and-watergirl-2", "fireboy-and-watergirl-3", "fireboy-and-watergirl-4", "flappy-bird", "flood-runner-2", "flood-runner-3", "flood-runner-4", "fnaf", "fnaf-2", "fnaf-3", "fnaf-4", "football-bros", "football-legends",
-            "free-rider-3", "fruit-ninja", "funny-battle", "funny-battle-2", "funny-mad-racing", "funny-shooter-2", "geometry-dash", "geometry-dash-lite", "geometry-vibes", "getaway-shootout", "get-on-top", "gladi-hoppers", "google-baseball", "google-dino", "granny", "granny-2", "guess-their-answer", "hanger-2", "happy-wheels", "helix-jump", "highway-traffic", "hill-climb-racing-lite", "hole-io", "house-of-hazards", "hover-racer-drive", "idle-breakout", "Indev", "iron-snout", "jetpack-joyride",
-            "johnny-trigger", "jumping-shell", "karate-bros", "kart-bros", "learn-to-fly", "learn-to-fly-2", "learn-to-fly-3", "learn-to-fly-idle", "madalin-stunt-cars-2", "melon-playground", "merge-round-racers", "minesweeper", "monkey-mart", "monster-tracks", "moto-x3m-2", "moto-x3m-3", "moto-x3m-pool-party", "moto-x3m-spooky-land", "moto-x3m-winter", "naob-miner", "opposite-day", "ovo", "ovo-2", "ovo-3-dimensions", "pac-man", "papas-bakeria", "papas-burgeria",
-            "papas-cheeseria", "papas-cupcakeria", "papas-donuteria", "papas-hotdoggeria", "papas-pancakeria", "papas-pastaria", "papas-pizzeria", "papas-scooperia", "papas-sushiria", "papas-taco-mia", "papas-wingeria", "paper-io-2", "parking-fury", "parking-fury-2", "parking-fury-3", "picos-school", "ping-pong-chaos", "pixel-speedrun", "plants-vs-zombies", "plonky", "polytrack", "poor-bunny", "pou", "ragdoll-archers", "ragdoll-hit", "ragdoll-soccer", "red-ball-4-vol-1", "red-ball-4-vol-2",
-            "red-ball-4-vol-3", "retro-bowl", "retro-bowl-college", "retro-highway", "retro-ping-pong", "riddle-school", "riddle-school-2", "riddle-school-3", "riddle-school-4", "riddle-school-5", "riddle-transfer", "riddle-transfer-2", "rocket-soccer-derby", "rooftop-snipers", "rooftop-snipers-2", "run", "run-2", "run-3", "sand-game", "short-life", "slope-2-player", "slope-3", "slow-roads", "sm-63", "sm-64", "snowball-io", "snow-rider", "snow-load",
-            "soccer-bros", "soccer-random", "spacebar-clicker", "space-is-key", "space-is-key-2", "space-waves", "speed-stars", "sprunki", "stack", "stacktris", "state-io", "stick-archers-battle", "stick-fighter", "stickman-hook", "stick-merge", "subway-surfers-beijing", "subway-surfers-havana", "subway-surfers-san-francisco", "super-bike-the-champion", "superhot", "super-liquid-soccer", "super-star-car", "table-tennis-world-tour", "tag", "tap-road", "temple-of-boom", "temple-run-2", "territorial-io", "the-impossible-quiz"
-        ];
-
-
-        let activeUser = null;
-
-        function generateGrid() {
-            const gridElement = document.getElementById('main-grid');
-            if (!gridElement) return;
-            gridElement.innerHTML = "";
-            
-            let customGames = [];
-            try { customGames = JSON.parse(localStorage.getItem('matrix_custom_games') || "[]"); } catch(e) {}
-            let allGames = [...gameFiles.map(name => ({ name: name, img: name + '/logo.png' })), ...customGames];
-
-            allGames.forEach(game => {
-                const card = document.createElement('div');
-                card.className = 'game-card';
-                card.setAttribute('data-name', game.name.replace(/-/g, ' '));
-
-                const img = document.createElement('img');
-                img.className = 'game-thumb';
-                img.src = game.img;
-                img.onerror = function() { this.src = 'https://placeholder.com' + encodeURIComponent(game.name.substring(0,12)); };
-
-                const title = document.createElement('div');
-                title.className = 'game-title';
-                title.innerText = game.name.replace(/-/g, ' ');
-
-                card.appendChild(img);
-                card.appendChild(title);
-                card.onclick = () => openGame(game.name);
-                gridElement.appendChild(card);
-            });
-        }
-
-        function addNewGameFromPanel() {
-            let name = document.getElementById('new-game-name').value.trim();
-            let imgUrl = document.getElementById('new-game-img').value.trim();
-            if(!name) { alert("أدخل اسم اللعبة أولاً!"); return; }
-            if(!imgUrl) { imgUrl = `${name}/logo.png`; }
-
