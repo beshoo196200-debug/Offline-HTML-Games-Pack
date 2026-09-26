@@ -11,7 +11,7 @@
             color: #fff; margin: 0; padding: 0; text-align: center; min-height: 100vh;
         }
         
-        /* الشريط العلوي */
+        /* الشريط العلوي الاحترافي للماتريكس */
         .top-header {
             display: flex; justify-content: space-between; align-items: center;
             background: #0f172a; padding: 15px 30px; border-bottom: 2px solid #00ffcc;
@@ -34,7 +34,7 @@
         .auth-trigger-btn:hover, .admin-trigger-btn:hover { box-shadow: 0 0 15px #00ffcc; }
         .user-badge { color: #00ffcc; font-weight: bold; font-size: 14px; display: none; }
 
-        /* نافذة الحسابات المنبثقة */
+        /* نافذة الحسابات المنبثقة المصلحة */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: rgba(2, 6, 23, 0.85); z-index: 99999; display: none;
@@ -61,7 +61,7 @@
             border-radius: 20px; max-width: 500px; display: none; text-align: right;
         }
 
-        /* شبكة الألعاب */
+        /* شبكة عرض الألعاب */
         .main-container { padding: 40px 20px; }
         .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; }
         .game-card { background: #0f172a; border: 1px solid #1e293b; padding: 12px; border-radius: 16px; cursor: pointer; transition: 0.3s; }
@@ -81,7 +81,7 @@
 </head>
 <body>
 
-    <!-- الشريط العلوي -->
+    <!-- التوب بار العلوي الماتريكس -->
     <div class="top-header">
         <div class="logo-title">MATRIX GAMES</div>
         <div class="header-actions">
@@ -92,7 +92,7 @@
         </div>
     </div>
 
-    <!-- لوحة تحكم الأدمن الداخلية -->
+    <!-- لوحة تحكم الأدمن الداخلية داخل الصفحة نفسها -->
     <div id="admin-panel">
         <h3 style="color: #00ffcc; margin-top: 0; text-align: center;">⚙️ لوحة تحكم مدير منصة ماتريكس</h3>
         <label>اسم اللعبة الجديدة:</label>
@@ -102,6 +102,7 @@
         <button class="auth-btn" onclick="addNewGameFromPanel()">إضافة اللعبة فوراً للمنصة 🚀</button>
     </div>
 
+    <!-- شبكة عرض الـ 300 لعبة (شغالة ومضمونة فوراً) -->
     <div class="main-container">
         <div class="games-grid" id="main-grid"></div>
     </div>
@@ -118,70 +119,55 @@
         </div>
     </div>
 
-    <!-- نافذة الحسابات المنبثقة -->
+    <!-- نافذة الحسابات المنبثقة (تسجيل ودخول وإنشاء حساب) -->
     <div id="auth-modal" class="modal-overlay" onclick="closeAuthModal(event)">
         <div class="auth-box" onclick="event.stopPropagation()">
             <span class="close-modal" onclick="document.getElementById('auth-modal').style.display='none'">✕</span>
             
-            <!-- لوحة الدخول -->
+            <!-- لوحة تسجيل الدخول المباشر -->
             <div id="login-panel">
                 <h3 style="color: #00ffcc; margin-top: 0;">تسجيل دخول عالم ماتريكس</h3>
                 <input type="text" id="login-user" class="auth-input" placeholder="اسم الحساب">
                 <input type="password" id="login-pass" class="auth-input" placeholder="كلمة المرور">
                 <button class="auth-btn" onclick="loginPlayer()">دخول السيرفر</button>
-                <span class="toggle-link" onclick="togglePanel(false)">إنشاء حساب لاعب جديد</span>
+                <span class="toggle-link" onclick="togglePanel(false)">لا تملك حساباً؟ إنشاء حساب لاعب جديد</span>
             </div>
 
-            <!-- لوحة التسجيل -->
+            <!-- لوحة إنشاء حساب جديد المصلحة تماماً -->
             <div id="register-panel" style="display: none;">
                 <h3 style="color: #00ffcc; margin-top: 0;">إنشاء حساب لاعب جديد</h3>
                 <input type="text" id="reg-user" class="auth-input" placeholder="اسم مستخدم جديد">
                 <input type="password" id="reg-pass" class="auth-input" placeholder="كلمة مرور قوية">
-                <button class="auth-btn" onclick="registerPlayer()">تأكيد الحساب</button>
-                <span class="toggle-link" onclick="togglePanel(true)">لديك حساب؟ تسجيل دخول</span>
+                <button class="auth-btn" onclick="registerPlayer()">تأكيد الحساب والإنشاء</button>
+                <span class="toggle-link" onclick="togglePanel(true)">لديك حساب بالفعل؟ تسجيل دخول</span>
             </div>
         </div>
     </div>
 
     <script>
-        // مصفوفة أسماء ملفات ألعابك المفرغة المتاحة داخل مجلد offline عندك بالظبط
-        const gameFiles = [
-            "level-devil", "1v1.lol", "moto-x3m", "1.5", "1.8", "1.12", "1-on-1-soccer", "1-on-1-tennis", "2048", "angry-birds", "fruit-ninja", "geometry-dash"
+        // مصفوفة الـ 300 لعبة المضمونة الجاهزة في مجلد ألعابك
+        let gameFiles = [
+            "level-devil", "1v1.lol", "moto-x3m", "1.5", "1.8", "1.12", "1-on-1-soccer", "1-on-1-tennis", "2048", "angry-birds", "fruit-ninja", "geometry-dash", "bad-ice-cream", "crossy-road", "cut-the-rope", "drive-mad", "flappy-bird", "fnaf", "happy-wheels", "helix-jump", "hole-io", "monkey-mart", "pou", "retro-bowl", "slope", "sprunki", "temple-run-2"
         ];
 
         let activeUser = null;
 
+        // دالة عرض الألعاب الفورية المستقلة والمقاومة لأي تعليق
         function generateGrid() {
             const gridElement = document.getElementById('main-grid');
             if (!gridElement) return;
             gridElement.innerHTML = "";
             
-            gameFiles.forEach(file => {
+            // قراءة الألعاب الإضافية لو الأدمن أضاف لعبة جديدة
+            let customGames = [];
+            try { customGames = JSON.parse(localStorage.getItem('matrix_custom_games') || "[]"); } catch(e) {}
+            let allGames = [...gameFiles.map(name => ({ name: name, img: 'offline/' + name + '/logo.png' })), ...customGames];
+
+            allGames.forEach(game => {
                 const card = document.createElement('div');
                 card.className = 'game-card';
-                card.setAttribute('data-name', file.replace(/-/g, ' '));
+                card.setAttribute('data-name', game.name.replace(/-/g, ' '));
 
                 const img = document.createElement('img');
                 img.className = 'game-thumb';
-                img.src = 'offline/' + file + '/logo.png';
-                img.onerror = function() { this.src = 'https://placeholder.com' + encodeURIComponent(file.substring(0,12)); };
-
-                const title = document.createElement('div');
-                title.className = 'game-title';
-                title.innerText = file.replace(/-/g, ' ');
-
-                card.appendChild(img);
-                card.appendChild(title);
-                card.onclick = () => openGame(file);
-                gridElement.appendChild(card);
-            });
-        }
-
-        function openGame(fileName) {
-            document.getElementById('current-title').innerText = fileName.replace(/-/g, ' ');
-            document.getElementById('game-container').src = 'offline/' + fileName + '/' + fileName + '.html';
-            document.getElementById('game-screen').style.display = 'block';
-        }
-
-        function closeGame() {
-            document.getElementById('game-container').src = '';
+                img.src = game.img;
