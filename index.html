@@ -7,70 +7,86 @@
     <style>
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: radial-gradient(circle at top, #0f172a 0%, #020617 100%); 
+            background: radial-gradient(circle at top, #060c06 0%, #010301 100%); 
             color: #fff; margin: 0; padding: 0; text-align: center; min-height: 100vh;
         }
+        
+        /* شريط التوب بار العلوى للماتريكس */
         .top-header {
             display: flex; justify-content: space-between; align-items: center;
-            background: #0f172a; padding: 15px 30px; border-bottom: 2px solid #00ffcc;
-            box-sizing: border-box; box-shadow: 0 4px 20px rgba(0,255,204,0.1);
+            background: #060c06; padding: 15px 30px; border-bottom: 2px solid #00ff66;
+            box-sizing: border-box; box-shadow: 0 4px 20px rgba(0,255,102,0.15);
         }
-        .logo-title { font-size: 24px; font-weight: 900; color: #00ffcc; text-shadow: 0 0 10px rgba(0,255,204,0.5); }
+        .logo-title { font-size: 26px; font-weight: 900; color: #00ff66; text-shadow: 0 0 15px rgba(0,255,102,0.6); letter-spacing: 1px; }
         .header-actions { display: flex; align-items: center; gap: 15px; }
+        
         .search-box { 
-            padding: 10px 20px; border-radius: 20px; border: 1px solid #1e293b;
-            background: #1e293b; color: #fff; font-size: 14px; outline: none; text-align: center; width: 200px;
+            padding: 11px 22px; border-radius: 20px; border: 1px solid #142414;
+            background: #142414; color: #fff; font-size: 14px; outline: none; text-align: center; width: 220px;
+            box-shadow: inset 0 0 10px rgba(0,255,102,0.05);
         }
-        .search-box:focus { border-color: #00ffcc; }
+        .search-box:focus { border-color: #00ff66; box-shadow: 0 0 10px rgba(0,255,102,0.3); }
+        
         .auth-trigger-btn, .admin-trigger-btn {
-            background: #00ffcc; color: #020617; border: none; padding: 10px 20px;
-            border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 14px; transition: 0.3s;
+            background: #00ff66; color: #010301; border: none; padding: 10px 22px;
+            border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 14px; transition: 0.3s ease;
         }
-        .admin-trigger-btn { background: #e2e8f0; color: #0f172a; display: none; }
-        .auth-trigger-btn:hover, .admin-trigger-btn:hover { box-shadow: 0 0 15px #00ffcc; }
-        .user-badge { color: #00ffcc; font-weight: bold; font-size: 14px; display: none; }
+        .admin-trigger-btn { background: #ffffff; color: #060c06; display: none; }
+        .auth-trigger-btn:hover, .admin-trigger-btn:hover { box-shadow: 0 0 15px #00ff66; transform: scale(1.03); }
+        .user-badge { color: #00ff66; font-weight: bold; font-size: 14px; display: none; text-shadow: 0 0 5px #00ff66; }
+
+        /* نافذة الحسابات المنبثقة الاحترافية */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(2, 6, 23, 0.85); z-index: 99999; display: none;
+            background: rgba(1, 3, 1, 0.9); z-index: 99999; display: none;
             align-items: center; justify-content: center;
-            
         }
         .auth-box {
-            background: #1e293b; border: 2px solid #00ffcc; padding: 30px;
-            border-radius: 20px; box-shadow: 0 0 30px rgba(0,255,204,0.3); width: 90%; max-width: 380px; position: relative;
+            background: #0c1a0c; border: 2px solid #00ff66; padding: 35px;
+            border-radius: 20px; box-shadow: 0 0 30px rgba(0,255,102,0.3); width: 90%; max-width: 390px; position: relative;
         }
-        .close-modal { position: absolute; top: 15px; left: 15px; color: #fff; font-size: 20px; cursor: pointer; }
+        .close-modal { position: absolute; top: 15px; left: 15px; color: #fff; font-size: 22px; cursor: pointer; transition: 0.2s; }
+        .close-modal:hover { color: #00ff66; }
         .auth-input {
-            width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px;
-            border: 1px solid #334155; background: #0f172a; color: #fff; text-align: center; box-sizing: border-box;
+            width: 100%; padding: 13px; margin: 12px 0; border-radius: 8px;
+            border: 1px solid #142414; background: #060c06; color: #fff; text-align: center; box-sizing: border-box; font-size: 15px;
         }
+        .auth-input:focus { border-color: #00ff66; outline: none; }
         .auth-btn {
-            width: 100%; padding: 12px; background: #00ffcc; color: #000;
-            border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 10px;
+            width: 100%; padding: 13px; background: #00ff66; color: #000;
+            border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 12px;
+            box-shadow: 0 0 10px rgba(0,255,102,0.2);
         }
-        .toggle-link { color: #94a3b8; font-size: 13px; margin-top: 15px; cursor: pointer; display: inline-block; text-decoration: underline; }
+        .toggle-link { color: #8fa38f; font-size: 13px; margin-top: 15px; cursor: pointer; display: inline-block; text-decoration: underline; }
+
+        /* لوحة تحكم الأدمن الداخلية الفاخرة للتحكم بالموقع */
         #admin-panel {
-            background: #1e293b; border: 2px solid #e2e8f0; padding: 25px; margin: 20px auto;
-            border-radius: 20px; max-width: 500px; display: none; text-align: right;
+            background: #0c1a0c; border: 2px solid #ffffff; padding: 25px; margin: 25px auto;
+            border-radius: 20px; max-width: 520px; display: none; text-align: right; box-shadow: 0 0 20px rgba(255,255,255,0.1);
         }
-        .main-container { padding: 40px 20px; }
-        .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; }
-        .game-card { background: #0f172a; border: 1px solid #1e293b; padding: 12px; border-radius: 16px; cursor: pointer; transition: 0.3s; }
-        .game-card:hover { border-color: #00ffcc; transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,255,204,0.2); }
-        .game-thumb { width: 100%; height: 110px; object-fit: cover; border-radius: 12px; background: #1e293b; }
-        .game-title { font-size: 14px; font-weight: bold; margin-top: 10px; color: #e2e8f0; text-transform: capitalize; }
+
+        /* شبكة الـ 300 لعبة الجيمينج */
+        .main-container { padding: 40px 25px; }
+        .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 25px; max-width: 1250px; margin: 0 auto; }
+        .game-card { background: #060c06; border: 1px solid #142414; padding: 12px; border-radius: 16px; cursor: pointer; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .game-card:hover { border-color: #00ff66; transform: translateY(-6px); box-shadow: 0 12px 24px rgba(0,255,102,0.25); }
+        .game-thumb { width: 100%; height: 115px; object-fit: cover; border-radius: 12px; background: #142414; border: 1px solid rgba(0,255,102,0.05); }
+        .game-title { font-size: 14px; font-weight: bold; margin-top: 12px; color: #e2e8f0; text-transform: capitalize; letter-spacing: 0.5px; }
+        
+        /* واجهة تشغيل اللعب السينمائية المريحة */
         #game-screen { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 9999; }
-        .control-bar { display: flex; justify-content: space-between; align-items: center; background: #0f172a; padding: 10px 25px; border-bottom: 2px solid #00ffcc; height: 65px; box-sizing: border-box; }
-        .btn { padding: 12px 25px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px; }
+        .control-bar { display: flex; justify-content: space-between; align-items: center; background: #060c06; padding: 10px 25px; border-bottom: 2px solid #00ff66; height: 65px; box-sizing: border-box; }
+        .btn { padding: 12px 25px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px; transition: 0.2s; }
         .back-btn { background: #f43f5e; color: #fff; }
-        .full-btn { background: #00ffcc; color: #020617; }
+        .full-btn { background: #00ff66; color: #010301; box-shadow: 0 0 10px rgba(0,255,102,0.3); }
+        .btn:hover { transform: scale(1.02); }
         .iframe-container { width: 100%; height: calc(100vh - 65px); background: #000; }
         iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
 
-    <!-- التوب بار العلوي -->
+    <!-- التوب بار العلوى للتحكم والبحث -->
     <div class="top-header">
         <div class="logo-title">MATRIX GAMES</div>
         <div class="header-actions">
@@ -81,24 +97,26 @@
         </div>
     </div>
 
-    <!-- لوحة تحكم الأدمن الداخلية -->
+    <!-- لوحة تحكم الأدمن الداخلية لتعديل وإضافة ألعاب أونلاين -->
     <div id="admin-panel">
-        <h3 style="color: #00ffcc; margin-top: 0; text-align: center;">⚙️ لوحة تحكم مدير منصة ماتريكس</h3>
-        <label>اسم اللعبة الجديدة:</label>
+        <h3 style="color: #00ff66; margin-top: 0; text-align: center; text-shadow: 0 0 10px #00ff66;">⚙️ لوحة تحكم مدير منصة ماتريكس</h3>
+        <label style="font-weight: bold; color: #a3bfa3;">اسم ملف اللعبة المفرغة الجديد بالظبط:</label>
         <input type="text" id="new-game-name" class="auth-input" placeholder="مثال: level-devil">
-        <label>رابط الصورة المخصصة للعبة:</label>
-        <input type="text" id="new-game-img" class="auth-input" placeholder="حط رابط لوجو اللعبة">
-        <button class="auth-btn" onclick="addNewGameFromPanel()">إضافة اللعبة فوراً للمنصة 🚀</button>
+        <label style="font-weight: bold; color: #a3bfa3;">رابط الصورة أو اللوجو للعبة (اختياري):</label>
+        <input type="text" id="new-game-img" class="auth-input" placeholder="سيبها فاضية وهيجيب لوجو الفولدر تلقائي">
+        <button class="auth-btn" onclick="addNewGameFromPanel()">تأكيد إضافة اللعبة فوراً للسيرفر 🚀</button>
     </div>
 
+    <!-- شبكة عرض الـ 300 لعبة كاملة ومجهزة للمسارات المباشرة برة -->
     <div class="main-container">
         <div class="games-grid" id="main-grid"></div>
     </div>
 
+    <!-- شاشة تشغيل الألعاب الفاخرة بملء الشاشة والرجوع المضمون -->
     <div id="game-screen">
         <div class="control-bar">
             <button class="btn back-btn" onclick="closeGame()">◄ خروج ورجوع</button>
-            <h2 id="current-title" style="margin: 0; font-size: 18px; color: #00ffcc;">اسم اللعبة</h2>
+            <h2 id="current-title" style="margin: 0; font-size: 18px; color: #00ff66; text-shadow: 0 0 5px #00ff66;">اسم اللعبة</h2>
             <button class="btn full-btn" onclick="goFull()">ملء الشاشة ⛶</button>
         </div>
         <div class="iframe-container" id="player-box">
@@ -106,30 +124,31 @@
         </div>
     </div>
 
+    <!-- لوحة الحسابات المنبثقة (تسجيل دخول وإنشاء حساب لاعب جديد) -->
     <div id="auth-modal" class="modal-overlay" onclick="closeAuthModal(event)">
         <div class="auth-box" onclick="event.stopPropagation()">
             <span class="close-modal" onclick="document.getElementById('auth-modal').style.display='none'">✕</span>
+            
+            <!-- لوحة الدخول المباشر -->
             <div id="login-panel">
-                <h3 style="color: #00ffcc; margin-top: 0;">تسجيل دخول عالم ماتريكس</h3>
-                <input type="text" id="login-user" class="auth-input" placeholder="اسم الحساب">
-                <input type="password" id="login-pass" class="auth-input" placeholder="كلمة المرور">
-                <button class="auth-btn" onclick="loginPlayer()">دخول السيرفر</button>
-                <span class="toggle-link" onclick="togglePanel(false)">لا تملك حساباً؟ إنشاء حساب لاعب جديد</span>
+                <h3 style="color: #00ff66; margin-top: 0;">تسجيل دخول عالم ماتريكس</h3>
+                <input type="text" id="login-user" class="auth-input" placeholder="اسم الحساب الشخصي">
+                <input type="password" id="login-pass" class="auth-input" placeholder="كلمة المرور السرية">
+                <button class="auth-btn" onclick="loginPlayer()">دخول السيرفر 🎮</button>
+                <span class="toggle-link" onclick="togglePanel(false)">لا تملك حساباً؟ إنشاء حساب لاعب جديد الآن</span>
             </div>
+
+            <!-- لوحة إنشاء حساب جديد المصلحة كاملة -->
             <div id="register-panel" style="display: none;">
-                <h3 style="color: #00ffcc; margin-top: 0;">إنشاء حساب لاعب جديد</h3>
-                <input type="text" id="reg-user" class="auth-input" placeholder="اسم مستخدم جديد">
-                <input type="password" id="reg-pass" class="auth-input" placeholder="كلمة مرور قوية">
-                <button class="auth-btn" onclick="registerPlayer()">تأكيد الحساب والإنشاء</button>
-                <span class="toggle-link" onclick="togglePanel(true)">لديك حساب بالفعل؟ تسجيل دخول</span>
+                <h3 style="color: #00ff66; margin-top: 0;">إنشاء حساب لاعب جديد</h3>
+                <input type="text" id="reg-user" class="auth-input" placeholder="اختر اسم مستخدم جديد">
+                <input type="password" id="reg-pass" class="auth-input" placeholder="اختر كلمة مرور قوية">
+                <button class="auth-btn" onclick="registerPlayer()">تأكيد الحساب والإنشاء 📝</button>
+                <span class="toggle-link" onclick="togglePanel(true)">تمتلك حساباً بالفعل؟ تسجيل دخول للمنصة</span>
             </div>
         </div>
     </div>
 
     <script>
-        // الـ 300 لعبة الجاهزة والمظبوطة بالكامل
+        // مصفوفة الـ 300 لعبة مصفوفة برمجياً اسم اسم بدون أي تعليق أو نقص
         let gameFiles = [
-            "level-devil", "1v1.lol", "moto-x3m", "1.5", "1.8", "1.12", "1-on-1-soccer", "1-on-1-tennis", "3D-flight-simulator", "8-ball-classic", "10-minutes-till-dawn", "12-mini-battles", "2048", "2048-cupcakes", "agar-io-lite", "age-of-war", "age-of-war-2", "ages-of-conflict", "Alpha_1.2.6", "among-us", "angry-birds", "angry-birds-showdown", "angry-birds-space", "awesome-tanks", "awesome-tanks-2", "backrooms", "bacon-may-die", "bad-ice-cream", "bad-ice-cream-2", "bad-ice-cream-3", "bad-parenting",
-            "bad-piggies", "baldis-basics", "baseball-9ross", "basketball-legends", "basketball-stars", "basket-bros", "basket-random", "Beta_1.3", "bitlife", "blf-planes", "blocky-snakes", "bloons-TD", "bloons-TD-2", "bloons-TD-3", "bloons-TD-4", "bloons-TD-5", "blazer2", "blumgi-racers", "blumgi-rocket", "bob-the-robber", "bob-the-robber-2", "bob-the-robber-5", "bouncy-motors", "bowmasters", "boxing-random", "breaking-the-bank", "bubble-shooter", "candy-crush", "capybara-clicker",
-            "car-drawing", "car-king-arena", "chess", "choppy-orc", "circloo", "circloo-2", "clash-of-vikings", "cleanup-io", "cluster-rush", "cookie-clicker", "crazy-cars", "crazy-catttle-3D", "crazy-crash-landing", "crazy-motorcycle", "crossy-road", "cut-the-rope", "dadish", "dadish-2", "dadish-3", "death-chase", "death-run-3D", "demolition-derby-crash-racing", "doodle-jump", "draw-climber", "dreadhead-parkour", "drift-boss", "drive-mad", "duck-life", "duck-life-2",
-            "duck-life-3", "duck-life-4", "duck-life-5", "ducklings-io", "eagle-ride", "earn-to-die", "earn-to-die-2", "eggy-car", "elastic-face", "escape-road", "escape-road-2", "escaping-the-prison", "evil-glitch", "fancy-pants-adventure", "fancy-pants-adventure-2", "fireboy-and-watergirl", "fireboy-and-watergirl-2", "fireboy-and-watergirl-3", "fireboy-and-watergirl-4", "flappy-bird", "flood-runner-2", "flood-runner-3", "flood-runner-4", "fnaf", "fnaf-2", "fnaf-3", "fnaf-4", "football-bros", "football-legends",
