@@ -4,33 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matrix Games | عالم ماتريكس للألعاب</title>
-    
-    <!-- استدعاء ملفات تشغيل سيرفر جوجل السحابي لربط قاعدة البيانات فوراً -->
-    <script type="module">
-        import { initializeApp } from "https://gstatic.com";
-        import { getFirestore, doc, setDoc, getDoc, arrayUnion } from "https://gstatic.com";
-
-        // المفتاح السحابي الكبير الخاص بحساب بشوي المظبوط
-        const firebaseConfig = {
-            apiKey: "AIzaSyDJZBVpfuTCeTKk4ml4SRvo7BrQnMh4QEE",
-            authDomain: "://firebaseapp.com",
-            projectId: "matrix-database-b13f3",
-            storageBucket: "matrix-database-b13f3.firebasestorage.app",
-            messagingSenderId: "98576605408",
-            appId: "1:98576605408:web:80fafe3a94d0406a6b7085",
-            measurementId: "G-DSEEFT7QJB"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        window.db = db;
-        window.setDoc = setDoc;
-        window.getDoc = getDoc;
-        window.doc = doc;
-        window.arrayUnion = arrayUnion;
-    </script>
-
     <style>
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
@@ -96,6 +69,7 @@
 </head>
 <body>
 
+    <!-- التوب بار العلوي -->
     <div class="top-header">
         <div class="logo-title">MATRIX GAMES</div>
         <div class="header-actions">
@@ -106,6 +80,7 @@
         </div>
     </div>
 
+    <!-- لوحة تحكم الأدمن الداخلية -->
     <div id="admin-panel">
         <h3 style="color: #00ffcc; margin-top: 0; text-align: center;">⚙️ لوحة تحكم مدير منصة ماتريكس</h3>
         <label>اسم اللعبة الجديدة:</label>
@@ -151,7 +126,9 @@
     </div>
 
     <script>
-        // المصفوفة الكاملة الـ 300 لعبة المظبوطة على مسار مستودعك الرئيسي
+        // الـ 300 لعبة الجاهزة والمظبوطة بالكامل
         let gameFiles = [
             "level-devil", "1v1.lol", "moto-x3m", "1.5", "1.8", "1.12", "1-on-1-soccer", "1-on-1-tennis", "3D-flight-simulator", "8-ball-classic", "10-minutes-till-dawn", "12-mini-battles", "2048", "2048-cupcakes", "agar-io-lite", "age-of-war", "age-of-war-2", "ages-of-conflict", "Alpha_1.2.6", "among-us", "angry-birds", "angry-birds-showdown", "angry-birds-space", "awesome-tanks", "awesome-tanks-2", "backrooms", "bacon-may-die", "bad-ice-cream", "bad-ice-cream-2", "bad-ice-cream-3", "bad-parenting",
             "bad-piggies", "baldis-basics", "baseball-9ross", "basketball-legends", "basketball-stars", "basket-bros", "basket-random", "Beta_1.3", "bitlife", "blf-planes", "blocky-snakes", "bloons-TD", "bloons-TD-2", "bloons-TD-3", "bloons-TD-4", "bloons-TD-5", "blazer2", "blumgi-racers", "blumgi-rocket", "bob-the-robber", "bob-the-robber-2", "bob-the-robber-5", "bouncy-motors", "bowmasters", "boxing-random", "breaking-the-bank", "bubble-shooter", "candy-crush", "capybara-clicker",
+            "car-drawing", "car-king-arena", "chess", "choppy-orc", "circloo", "circloo-2", "clash-of-vikings", "cleanup-io", "cluster-rush", "cookie-clicker", "crazy-cars", "crazy-catttle-3D", "crazy-crash-landing", "crazy-motorcycle", "crossy-road", "cut-the-rope", "dadish", "dadish-2", "dadish-3", "death-chase", "death-run-3D", "demolition-derby-crash-racing", "doodle-jump", "draw-climber", "dreadhead-parkour", "drift-boss", "drive-mad", "duck-life", "duck-life-2",
+            "duck-life-3", "duck-life-4", "duck-life-5", "ducklings-io", "eagle-ride", "earn-to-die", "earn-to-die-2", "eggy-car", "elastic-face", "escape-road", "escape-road-2", "escaping-the-prison", "evil-glitch", "fancy-pants-adventure", "fancy-pants-adventure-2", "fireboy-and-watergirl", "fireboy-and-watergirl-2", "fireboy-and-watergirl-3", "fireboy-and-watergirl-4", "flappy-bird", "flood-runner-2", "flood-runner-3", "flood-runner-4", "fnaf", "fnaf-2", "fnaf-3", "fnaf-4", "football-bros", "football-legends",
